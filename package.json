@@ -18,6 +18,7 @@
     "@ombiel/aek-asset-store": "^0.0.8",
     "@ombiel/aek-css": "1.0.x",
     "@ombiel/aek-lib": "1.0.x",
+    "core-js": "^2.6.5",
     "react": "^16.6.1",
     "react-dom": "^16.6.1"
   },

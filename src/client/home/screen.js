@@ -1,9 +1,13 @@
 import React from "react";
+import Interests from "./Interests";
+
 import {
   Container,
   VBox,
   BannerHeader,
   BasicSegment,
+  Listview,
+  ListviewItem as Item
 } from "@ombiel/aek-lib";
 
 
@@ -17,14 +21,7 @@ export default class Screen extends React.Component {
 
     return (
       <Container>
-        <VBox>
-          <BannerHeader theme="alt" key="header" data-flex={0}>Home</BannerHeader>
-          <BasicSegment>
-            <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
-            <p>Sed posuere consectetur est at lobortis.</p>
-          </BasicSegment>
-        </VBox>
+        <Interests/>
       </Container>
     );
 
