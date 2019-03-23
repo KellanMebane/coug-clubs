@@ -1,13 +1,22 @@
 import React from "react";
 import {
   Container,
+  Button,
   VBox,
   BannerHeader,
   BasicSegment,
+  Listview,
+  ListviewItem as Item
 } from "@ombiel/aek-lib";
+import Club from "./clubs";
+import ClubList from "./clubList";
 
 
 export default class Screen extends React.Component {
+
+  componentWillMount() {
+
+  }
 
   componentDidMount() {
 
@@ -19,15 +28,9 @@ export default class Screen extends React.Component {
       <Container>
         <VBox>
           <BannerHeader theme="alt" key="header" data-flex={0}>Home</BannerHeader>
-          <BasicSegment>
-            <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
-            <p>Sed posuere consectetur est at lobortis.</p>
-          </BasicSegment>
+          <ClubList></ClubList>
         </VBox>
       </Container>
     );
-
   }
-
 }
