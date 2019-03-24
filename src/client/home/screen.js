@@ -1,20 +1,22 @@
 import React from "react";
-import Interests from "./Interests";
-
 import {
   Container,
-  Button,
   VBox,
   BannerHeader,
-  BasicSegment,
-  Listview,
-  ListviewItem as Item
 } from "@ombiel/aek-lib";
-import Club from "./clubs";
 import ClubList from "./clubList";
+import Interests from "./Interests";
 
 
 export default class Screen extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      tags: [],
+      swap: false,
+    };
+  }
 
   componentWillMount() {
 
@@ -24,18 +26,36 @@ export default class Screen extends React.Component {
 
   }
 
+  swap(boo) {
+    if (boo) {
+      return (
+        <ClubList tags={this.state.tags}></ClubList>
+      );
+    }
+    return (
+      <Interests
+        onFinalize={(data) => {
+          this.state.tags = data;
+          this.setState({
+            tags: this.state.tags,
+            swap: true
+          });
+        }}
+      >
+      </Interests>
+    );
+  }
+
   render() {
+
+    var x = this.swap(this.state.swap);
 
     return (
       <Container>
-<<<<<<< HEAD
-        <Interests/>
-=======
         <VBox>
           <BannerHeader theme="alt" key="header" data-flex={0}>Home</BannerHeader>
-          <ClubList></ClubList>
+          {x}
         </VBox>
->>>>>>> 109debb257a551ce656854219147c6df30a610bf
       </Container>
     );
   }
