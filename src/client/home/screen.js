@@ -6,6 +6,7 @@ import {
 } from "@ombiel/aek-lib";
 import ClubList from "./clubList";
 import Interests from "./Interests";
+import NavBar from "./NavBar";
 
 
 export default class Screen extends React.Component {
@@ -14,7 +15,7 @@ export default class Screen extends React.Component {
 
     this.state = {
       tags: [],
-      swap: false,
+      tab: 0,
     };
   }
 
@@ -37,7 +38,8 @@ export default class Screen extends React.Component {
         onFinalize={(data) => {
           this.state.tags = data;
           this.setState({
-            tags: this.tags
+            tags: this.tags,
+            tab: 1
           });
 
           console.log(this.state.tags);
@@ -47,15 +49,45 @@ export default class Screen extends React.Component {
     );
   }
 
+  showTab(tab) {
+    if (tab === 0) {
+      return (
+        <Interests
+          onFinalize={(data) => {
+            this.state.tags = data;
+            this.setState({
+              tags: this.state.tags,
+              tab: 1
+            });
+
+            console.log(this.state.tags);
+          }}
+        >
+        </Interests>
+      );
+    }
+
+    if (tab === 1) {
+      console.log(this.state.tags);
+      return (
+        <ClubList tags={this.state.tags}></ClubList>
+      );
+    }
+
+    return (
+      <div>hello</div>
+    );
+  }
+
   render() {
 
-    //var x = this.swap(this.state.swap);
+    var x = this.showTab(this.state.tab); //this.swap(this.state.swap);
 
     return (
       <Container>
         <VBox style={{ maxHeight: 400, overflow: 'auto' }}>
-          <BannerHeader theme="alt" key="header" data-flex={0}>Home</BannerHeader>
-          {/*{x}*/}
+          <NavBar onCallBack={(data) => { this.setState({ tab: data }); }}></NavBar>
+          {x}
         </VBox>
       </Container>
     );
