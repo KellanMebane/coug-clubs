@@ -1,12 +1,9 @@
 import React from "react";
 import {
-  Container,
-  VBox,
-  BannerHeader,
-  BasicSegment,
   Listview,
   ListviewItem as Item,
-  Button
+  Button,
+  Divider
 } from "@ombiel/aek-lib";
 
 export default class Interests extends React.Component {

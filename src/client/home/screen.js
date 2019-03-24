@@ -1,5 +1,5 @@
 import React from "react";
-import Interests from "./Interests";
+import NavBar from "./NavBar";
 
 import {
   Container,
@@ -15,6 +15,10 @@ import ClubList from "./clubList";
 
 
 export default class Screen extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {test: -1}
+  }
 
   componentWillMount() {
 
@@ -23,19 +27,12 @@ export default class Screen extends React.Component {
   componentDidMount() {
 
   }
-
+  
   render() {
 
     return (
       <Container>
-<<<<<<< HEAD
-        <Interests/>
-=======
-        <VBox>
-          <BannerHeader theme="alt" key="header" data-flex={0}>Home</BannerHeader>
-          <ClubList></ClubList>
-        </VBox>
->>>>>>> 109debb257a551ce656854219147c6df30a610bf
+        <NavBar onCallBack={(data)=>{this.setState({test: data}); console.log(data)}}/>
       </Container>
     );
   }
