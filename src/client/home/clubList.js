@@ -69,7 +69,7 @@ export default class ClubList extends React.Component {
     return (
       <Container>
         <BasicSegment>
-          <Listview style={{ maxHeight: 400, overflow: 'auto' }}>
+          <Listview style={{ maxHeight: 600, overflow: 'auto' }}>
             {renderedListOfClubs}
           </Listview>
         </BasicSegment>

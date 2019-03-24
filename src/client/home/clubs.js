@@ -12,8 +12,3 @@ export default class Club {
 //var clubs = [];
 
 //clubs.add(Club('Baseball Club', [], [], [], 'A club for fans of baseball!', 'https://securea.mlb.com/assets/images/7/9/8/263250798/cuts/770x308/cut.jpg'));
-
-
-
-
-
