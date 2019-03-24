@@ -37,9 +37,10 @@ export default class Screen extends React.Component {
         onFinalize={(data) => {
           this.state.tags = data;
           this.setState({
-            tags: this.state.tags,
-            swap: true
+            tags: this.tags
           });
+
+          console.log(this.state.tags);
         }}
       >
       </Interests>
@@ -48,13 +49,13 @@ export default class Screen extends React.Component {
 
   render() {
 
-    var x = this.swap(this.state.swap);
+    //var x = this.swap(this.state.swap);
 
     return (
       <Container>
-        <VBox>
+        <VBox style={{ maxHeight: 400, overflow: 'auto' }}>
           <BannerHeader theme="alt" key="header" data-flex={0}>Home</BannerHeader>
-          {x}
+          {/*{x}*/}
         </VBox>
       </Container>
     );
