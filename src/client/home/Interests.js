@@ -7,66 +7,89 @@ import {
 export default class Interests extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { done: 0, tags: [], };
-    this.handleFinalize = this.handleFinalize.bind(this);
+    this.state = {
+      tags: Array.from(this.props.tags), // tag list comes from parent, and get's modified here. (IF WE DON'T USE from(), IT'S ACTUALLY A SHALLOW COPY)
+      masterTagList: [ // keeps the master list of tags (SHOULD COME FROM AN API OF SORTS)
+        "Culture",
+        "Language",
+        "Cougs",
+        "Sports",
+        "Anime",
+        "Coloring",
+        "3D printing",
+        "Acrobatics",
+        "Acting",
+        "Animation",
+        "Baking",
+        "Collecting",
+        "Computer programming",
+        "Cooking",
+        "Cosplaying",
+        "Couponing",
+        "Creative writing",
+        "Crocheting",
+        "Cross-stitch",
+        "Crossword puzzles",
+        "Cryptography",
+        "Dance",
+        "Digital Arts",
+        "Do it yourself",
+        "Drama",
+        "Drawing",
+        "Electronics",
+        "Glass Blowing",
+        "Machines",
+        "Herb Keeping",
+        "Homebrewing",
+        "Magic",
+      ],
+    };
   }
 
-  addToTags(x) {
-    this.state.tags.push(x);
-    //console.log(this.state.tags);
+  // add a tag to the list of selected tags
+  addToTags(tagToBeAdded) {
+    var index = this.state.tags.indexOf(tagToBeAdded); // find index of the item in the current list
+    if (index !== -1) // item already exists
+      this.state.tags.splice(index, 1); // remove it (deselect)
+    else
+      this.state.tags.push(tagToBeAdded); // insert it
+    this.setState({ tags: this.state.tags }); // update the ui
+    this.props.onAdded(tagToBeAdded); // pass back the selected item
   }
 
+  // Tells parent to switch to Clubs tab
   handleFinalize() {
-    this.props.onFinalize(this.state.tags);
+    this.props.onFinalize();
   }
 
+  // Clears tags in both here and in parent
+  handleClear() {
+    this.setState({ tags: [] });
+    this.props.onClear();
+  }
 
-  render() {
+  // take tagData and return in HTML
+  renderTags(tagData) {
+    var selected = this.state.tags.indexOf(tagData) === -1 ? false : true; // find if selected
+
+    var styling = selected ? { backgroundColor: '#ff9994', color: '#000000' } : null; // style if selected
 
     return (
-      <Listview>
-        <div style={{ margin: "50px 0" }}>
-          <Button onClick={() => this.addToTags("culture")} iconBox circular>Culture</Button>
-          <Button onClick={() => this.addToTags("Language")} iconBox circular>Language</Button>
-          <Button onClick={() => this.addToTags("Cougs")} iconBox circular>Cougs</Button>
-          <Button onClick={() => this.addToTags("Sports")} iconBox circular>Sports</Button>
-          <Button onClick={() => this.addToTags("Anime")} iconBox circular>Anime</Button>
-          <Button onClick={() => this.addToTags("Coloring")} iconBox circular>Coloring</Button>
-          <Button onClick={() => this.addToTags("3D printing")} iconBox circular>3D printing</Button>
-          <Button onClick={() => this.addToTags("Acrobatics")} iconBox circular>Acrobatics</Button>
-          <Button onClick={() => this.addToTags("Acting")} iconBox circular>Acting</Button>
-          <Button onClick={() => this.addToTags("Animation")} iconBox circular>Animation</Button>
-          <Button onClick={() => this.addToTags("Baking")} iconBox circular>Baking</Button>
-          <Button onClick={() => this.addToTags("Collecting")} iconBox circular>Collecting</Button>
-          <Button onClick={() => this.addToTags("Coloring")} iconBox circular>Coloring</Button>
-          <Button onClick={() => this.addToTags("Computer programming")} iconBox circular>Computer programming</Button>
-          <Button onClick={() => this.addToTags("Cooking")} iconBox circular>Cooking</Button>
-          <Button onClick={() => this.addToTags("Cosplaying")} iconBox circular>Cosplaying</Button>
-          <Button onClick={() => this.addToTags("Couponing")} iconBox circular>Couponing</Button>
-          <Button onClick={() => this.addToTags("Creative writing")} iconBox circular>Creative writing</Button>
-          <Button onClick={() => this.addToTags("Crocheting")} iconBox circular>Crocheting</Button>
-          <Button onClick={() => this.addToTags("Cross-stitch")} iconBox circular>Cross-stitch</Button>
-          <Button onClick={() => this.addToTags("Crossword puzzles")} iconBox circular>Crossword puzzles</Button>
-          <Button onClick={() => this.addToTags("Cryptography")} iconBox circular>Cryptography</Button>
-          <Button onClick={() => this.addToTags("Dance")} iconBox circular>Dance</Button>
-          <Button onClick={() => this.addToTags("Digital Arts")} iconBox circular>Digital Arts</Button>
-          <Button onClick={() => this.addToTags("Do it yourself")} iconBox circular>Do it yourself</Button>
-          <Button onClick={() => this.addToTags("Drama")} iconBox circular>Drama</Button>
-          <Button onClick={() => this.addToTags("Drawing")} iconBox circular>Drawing</Button>
-          <Button onClick={() => this.addToTags("Electronics")} iconBox circular>Electronics</Button>
-          <Button onClick={() => this.addToTags("Glass Blowing")} iconBox circular>Glass Blowing</Button>
-          <Button onClick={() => this.addToTags("Machines")} iconBox circular>Machines</Button>
-          <Button onClick={() => this.addToTags("Herb Keeping")} iconBox circular>Herb Keeping</Button>
-          <Button onClick={() => this.addToTags("Homebrewing")} iconBox circular>Homebrewing</Button>
-          <Button onClick={() => this.addToTags("Magic")} iconBox circular>Magic</Button>
-
-          <center>
-            <Button onClick={() => { this.handleFinalize(); }} variation="positive" iconBox circular>Finalize</Button>
-          </center>
-        </div>
-      </Listview>
+      <Button style={styling} onClick={() => this.addToTags(tagData)} iconBox circular>{tagData}</Button>
     );
-
   }
 
+  render() {
+    var renderedListOfTags = this.state.masterTagList.map((data) => this.renderTags(data)); // how to render lists
+
+    return (
+      <div style={{ margin: "50px 0" }}>
+        {renderedListOfTags}
+        < center >
+          <Button onClick={() => { this.handleClear(); }} variation="negative" iconBox circular>Clear</Button>
+          <Button onClick={() => { this.handleFinalize(); }} variation="positive" iconBox circular>Finalize</Button>
+        </center >
+      </div >
+    );
+  }
 }

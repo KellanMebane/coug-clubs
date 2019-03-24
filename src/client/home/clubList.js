@@ -14,18 +14,10 @@ export default class ClubList extends React.Component {
     super(props);
 
     this.state = {
-      clubs: [],
+      clubs: [], // local list of clubs
     };
 
-    this.initClubs();
-  }
-
-  componentWillMount() {
-
-  }
-
-  componentDidMount() {
-
+    this.initClubs(); // this is just to fill the list of clubs, realistically would come from a database
   }
 
   initClubs() {
@@ -39,19 +31,19 @@ export default class ClubList extends React.Component {
     this.state.clubs = localclubs;
   }
 
-  renderItem(data) {
-
-    if (this.props.tags) {
-      if (this.props.tags.length > 0) {
+  // render a club based on the data given
+  renderClub(data) {
+    if (this.props.tags) { // checks if tag lists exists
+      if (this.props.tags.length > 0) { // if it's empty, we'll display all clubs
         var checked = false;
-        for (var i = 0; i < this.props.tags.length; i += 1) {
+        for (var i = 0; i < this.props.tags.length; i += 1) { // if any of the tags matches the club's tags, render the club.
           if (data.tags.indexOf(this.props.tags[i]) !== -1) {
             checked = true;
             break;
           }
         }
 
-        if (checked) {
+        if (checked) { // render the club
           return (
             <Item thumbnail={data.picture} thumbContained thumbSize="big">
               <h4>{data.name}</h4>
@@ -59,12 +51,11 @@ export default class ClubList extends React.Component {
             </Item>
           );
         }
-        return (
-          <div></div>
-        );
+        return (null); // don't render the club
       }
     }
 
+    // in this case we render all clubs
     return (
       <Item thumbnail={data.picture} thumbContained thumbSize="big">
         <h4>{data.name}</h4>
@@ -74,13 +65,13 @@ export default class ClubList extends React.Component {
   }
 
   render() {
-    var x = this.state.clubs.map((data) => this.renderItem(data));
+    var renderedListOfClubs = this.state.clubs.map((data) => this.renderClub(data));
 
     return (
       <Container>
         <BasicSegment>
           <Listview style={{ maxHeight: 400, overflow: 'auto' }}>
-            {x}
+            {renderedListOfClubs}
           </Listview>
         </BasicSegment>
       </Container>

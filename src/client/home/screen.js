@@ -14,59 +14,43 @@ export default class Screen extends React.Component {
     super(props);
 
     this.state = {
-      tags: [],
-      tab: 0,
+      tags: [], // parent and child hold onto this
+      tab: 0, // selected tab
     };
   }
 
-  componentWillMount() {
-
-  }
-
-  componentDidMount() {
-
-  }
-
-  swap(boo) {
-    if (boo) {
-      return (
-        <ClubList tags={this.state.tags}></ClubList>
-      );
-    }
-    return (
-      <Interests
-        onFinalize={(data) => {
-          this.state.tags = data;
-          this.setState({
-            tags: this.tags,
-            tab: 1
-          });
-
-          console.log(this.state.tags);
-        }}
-      >
-      </Interests>
-    );
-  }
-
+  // conditionally renders the body as 1 of 3 components
   showTab(tab) {
+    // Interests Tab
     if (tab === 0) {
       return (
         <Interests
-          onFinalize={(data) => {
-            this.state.tags = data;
+          tags={this.state.tags}
+
+          onAdded={(data) => {
+            var index = this.state.tags.indexOf(data); // find index of the item in the current list
+            if (index !== -1) // item already exists
+              this.state.tags.splice(index, 1); // remove it (deselect)
+            else
+              this.state.tags.push(data); // insert it
+            this.setState({ // save changes
+              tags: this.state.tags
+            });
+          }}
+
+          onFinalize={() => {
             this.setState({
-              tags: this.state.tags,
               tab: 1
             });
-
-            console.log(this.state.tags);
           }}
+
+          onClear={() => { this.setState({ tags: [] }) }}
         >
         </Interests>
       );
     }
 
+    // ClubList Tab
     if (tab === 1) {
       console.log(this.state.tags);
       return (
@@ -74,6 +58,7 @@ export default class Screen extends React.Component {
       );
     }
 
+    // Calendar Tab
     return (
       <div>hello</div>
     );
@@ -81,13 +66,13 @@ export default class Screen extends React.Component {
 
   render() {
 
-    var x = this.showTab(this.state.tab); //this.swap(this.state.swap);
+    var tabToShow = this.showTab(this.state.tab); // Decides which tabs will be shown
 
     return (
       <Container>
-        <VBox style={{ maxHeight: 400, overflow: 'auto' }}>
+        <VBox>
           <NavBar onCallBack={(data) => { this.setState({ tab: data }); }}></NavBar>
-          {x}
+          {tabToShow}
         </VBox>
       </Container>
     );
