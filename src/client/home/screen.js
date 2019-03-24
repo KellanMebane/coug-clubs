@@ -2,11 +2,10 @@ import React from "react";
 import {
   Container,
   VBox,
-  BannerHeader,
 } from "@ombiel/aek-lib";
 import ClubList from "./clubList";
-import Interests from "./Interests";
-import NavBar from "./NavBar";
+import Interests from "./interests";
+import NavBar from "./navBar";
 
 
 export default class Screen extends React.Component {

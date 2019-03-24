@@ -1,5 +1,5 @@
 import React from "react";
-import { NavMenu, NavMenuItem, Divider } from "@ombiel/aek-lib";
+import { NavMenu, NavMenuItem } from "@ombiel/aek-lib";
 
 export default class NavBar extends React.Component {
   constructor(props) {
