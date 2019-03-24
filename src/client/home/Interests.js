@@ -1,6 +1,9 @@
+/* eslint-disable no-unneeded-ternary */
+/* eslint-disable nonblock-statement-body-position */
+/* eslint-disable react/no-access-state-in-setstate */
+/* eslint-disable react/prop-types */
 import React from "react";
 import {
-  Listview,
   Button
 } from "@ombiel/aek-lib";
 
@@ -49,11 +52,15 @@ export default class Interests extends React.Component {
   // add a tag to the list of selected tags
   addToTags(tagToBeAdded) {
     var index = this.state.tags.indexOf(tagToBeAdded); // find index of the item in the current list
-    if (index !== -1) // item already exists
+    if (index !== -1) { // item already exists
       this.state.tags.splice(index, 1); // remove it (deselect)
-    else
+    }
+    else {
       this.state.tags.push(tagToBeAdded); // insert it
-    this.setState({ tags: this.state.tags }); // update the ui
+    }
+    this.setState({
+      tags: this.state.tags // update the ui
+    });
     this.props.onAdded(tagToBeAdded); // pass back the selected item
   }
 
@@ -85,11 +92,11 @@ export default class Interests extends React.Component {
     return (
       <div style={{ margin: "50px 0" }}>
         {renderedListOfTags}
-        < center >
+        <center>
           <Button onClick={() => { this.handleClear(); }} variation="negative" iconBox circular>Clear</Button>
           <Button onClick={() => { this.handleFinalize(); }} variation="positive" iconBox circular>Finalize</Button>
-        </center >
-      </div >
+        </center>
+      </div>
     );
   }
 }
